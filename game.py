@@ -2,19 +2,16 @@ import pygame
 
 pygame.init()
 win = pygame.display.set_mode((500, 500))
-
 pygame.display.set_caption("Tileks' game")
 
 walkRight = [pygame.image.load('game\pygame_right_1.png'),
-pygame.image.load('game\pygame_right_2.png'), pygame.image.load('game\pygame_right_3.png'),
-pygame.image.load('game\pygame_right_4.png'), pygame.image.load('game\pygame_right_5.png'),
-pygame.image.load('game\pygame_right_6.png')]
-
+             pygame.image.load('game\pygame_right_2.png'), pygame.image.load('game\pygame_right_3.png'),
+             pygame.image.load('game\pygame_right_4.png'), pygame.image.load('game\pygame_right_5.png'),
+             pygame.image.load('game\pygame_right_6.png')]
 walkLeft = [pygame.image.load('game\pygame_left_1.png'),
-pygame.image.load('game\pygame_left_2.png'), pygame.image.load('game\pygame_left_3.png'),
-pygame.image.load('game\pygame_left_4.png'), pygame.image.load('game\pygame_left_5.png'),
-pygame.image.load('game\pygame_left_6.png')]
-
+            pygame.image.load('game\pygame_left_2.png'), pygame.image.load('game\pygame_left_3.png'),
+            pygame.image.load('game\pygame_left_4.png'), pygame.image.load('game\pygame_left_5.png'),
+            pygame.image.load('game\pygame_left_6.png')]
 playerStand = pygame.image.load('game\pygame_idle.png')
 bg = pygame.image.load('game\pygame_bg.jpg')
 
@@ -25,14 +22,13 @@ y = 425
 width = 60
 height = 71
 speed = 5
-
 isJump = False
 JumpCount = 10
-
 left = False
 right = False
 animCount = 0
 lastMove = "right"
+
 
 class snaryad():
     def __init__(self, x, y, radius, color, facing):
@@ -45,6 +41,7 @@ class snaryad():
 
     def draw(self, win):
         pygame.draw.circle(win, self.color, (self.x, self.y), self.radius)
+
 
 def drawWindow():
     global animCount
@@ -60,12 +57,13 @@ def drawWindow():
         win.blit(walkRight[animCount // 5], (x, y))
         animCount += 1
     else:
-        win.blit(playerStand, (x,y))
+        win.blit(playerStand, (x, y))
 
     for bullet in bullets:
         bullet.draw(win)
 
     pygame.display.update()
+
 
 run = True
 bullets = []
@@ -77,11 +75,10 @@ while run:
             run = False
 
     for bullet in bullets:
-        if 500 > bullet.x > 0:
+        if bullet.x < 500 and bullet.x > 0:
             bullet.x += bullet.vel
         else:
-            bullet.pop(bullets.index(bullet))
-
+            bullets.pop(bullets.index(bullet))
 
     keys = pygame.key.get_pressed()
 
@@ -90,11 +87,9 @@ while run:
             facing = 1
         else:
             facing = -1
-
-
         if len(bullets) < 5:
-            bullets.append(snaryad(round(x + width // 2),
-                                   (round(y + height // 2), 5, (255, 0, 0), facing)))
+            bullets.append(snaryad(round(x + width // 2), round(y +
+            height // 2), 5, (255, 0, 0), facing))
 
     if keys[pygame.K_LEFT] and x > 5:
         x -= speed
@@ -110,7 +105,7 @@ while run:
         left = False
         right = False
         animCount = 0
-    if not(isJump):
+    if not (isJump):
         if keys[pygame.K_SPACE]:
             isJump = True
     else:
@@ -118,7 +113,7 @@ while run:
             if JumpCount < 0:
                 y += (JumpCount ** 2) / 2
             else:
-                y -= (JumpCount **2) / 2
+                y -= (JumpCount ** 2) / 2
             JumpCount -= 1
         else:
             isJump = False
