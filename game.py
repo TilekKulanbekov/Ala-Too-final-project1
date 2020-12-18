@@ -16,6 +16,7 @@ playerStand = pygame.image.load('game\pygame_idle.png')
 bg = pygame.image.load('game\pygame_bg.jpg')
 
 clock = pygame.time.Clock()
+score = 0
 
 class player(object):
     def __init__(self, x, y, width, height):
@@ -49,7 +50,7 @@ class player(object):
             else:
                 win.blit(walkLeft[0], (self.x, self.y))
         self.hitbox = (self.x + 10, self.y, 38, 70)
-        pygame.draw.rect(win, (255,0,0), self.hitbox,2)
+        #pygame.draw.rect(win, (255,0,0), self.hitbox,2)
 
 
 class snaryad(object):
@@ -87,19 +88,25 @@ class enemy(object):
         self.walkCount = 0
         self.vel = 3
         self.hitbox = (self.x + 17, self.y, 35, 60)
+        self.health = 9
+        self.visible = True
 
     def draw(self, win):
         self.move()
-        if self.walkCount + 1 >= 33:
-            self.walkCount = 0
-        if self.vel > 0:  # If we are moving to the right we will display our walkRight images
-            win.blit(self.walkRight[self.walkCount // 3], (self.x, self.y))
-            self.walkCount += 1
-        else:  # Otherwise we will display the walkLeft images
-            win.blit(self.walkLeft[self.walkCount // 3], (self.x, self.y))
-            self.walkCount += 1
-        self.hitbox = (self.x + 17, self.y, 35, 60)
-        pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)
+        if self.visible:
+            if self.walkCount + 1 >= 33:
+                self.walkCount = 0
+            if self.vel > 0:  # If we are moving to the right we will display our walkRight images
+                win.blit(self.walkRight[self.walkCount // 3], (self.x, self.y))
+                self.walkCount += 1
+            else:  # Otherwise we will display the walkLeft images
+                win.blit(self.walkLeft[self.walkCount // 3], (self.x, self.y))
+                self.walkCount += 1
+
+            pygame.draw.rect(win, (255,0,0), (self.hitbox[0], self.hitbox[1] - 20, 50, 10))
+            pygame.draw.rect(win, (0, 128, 0), (self.hitbox[0], self.hitbox[1] - 20, 50 - (5 * (9 - self.health)), 10))
+            self.hitbox = (self.x + 17, self.y, 35, 60)
+            #pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)
 
     def move(self):
         if self.vel > 0:  # If we are moving right
@@ -116,9 +123,17 @@ class enemy(object):
                 self.vel = self.vel * -1
                 self.x += self.vel
                 self.walkCount = 0
+    def hit(self):
+        if self.health > 0:
+            self.health -= 1
+        else:
+            self.visible = False
+        print("hit")
 
 def drawWindow():
     win.blit(bg, (0, 0))
+    text = font.render('Score: ' + str(score), 1, (0,0,0))
+    win.blit(text, (365,10))
     man.draw(win)
     goblin.draw(win)
     for bullet in bullets:
@@ -127,18 +142,30 @@ def drawWindow():
     pygame.display.update()
 
 
+font = pygame.font.SysFont('comicsans', 30, True, True)
 man = player(200, 420, 60, 75)
 goblin = enemy(-30, 434, 64, 64, 440)
+shootLoop = 0
 bullets = []
 run = True
 while run:
     clock.tick(27)
+
+    if shootLoop > 0:
+        shootLoop += 1
+    if shootLoop > 3:
+        shootLoop = 0
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
 
     for bullet in bullets:
+        if bullet.y - bullet.radius < goblin.hitbox[1] + goblin.hitbox[3] and bullet.y + bullet.radius > goblin.hitbox[1]:
+            if bullet.x + bullet.radius > goblin.hitbox[0] and bullet.x - bullet.radius < goblin.hitbox[0] + goblin.hitbox[2]:
+                goblin.hit()
+                score += 1
+                bullets.pop(bullets.index(bullet))
         if bullet.x < 500 and bullet.x > 0:
             bullet.x += bullet.vel
         else:
@@ -146,7 +173,7 @@ while run:
 
     keys = pygame.key.get_pressed()
 
-    if keys[pygame.K_f]:
+    if keys[pygame.K_f] and shootLoop == 0:
         if man.left:
             facing = -1
         else:
@@ -155,6 +182,8 @@ while run:
         if len(bullets) < 5:
             bullets.append(
                 snaryad(round(man.x + man.width // 2), round(man.y + man.height // 2), 6, (0, 0, 0), facing))
+
+        shootLoop = 1
 
     if keys[pygame.K_LEFT] and man.x > man.vel:
         man.x -= man.vel
