@@ -14,4 +14,4 @@ This is a game in which you have to fight a goblin that runs from one corner to 
 Don't get caught !!!
 
 
-![alt text](file:///C:/Users/Tilek/Desktop/screenshot.png)
+![alt text](file:///game/screenshot.png)
