@@ -13,4 +13,4 @@ Description
 This is a game in which you have to fight a goblin that runs from one corner to another to hit you and take your points. Your goal is to run and shoot this goblin, thereby earning points.
 Don't get caught !!!
 
-![game](http://url/to/screenshot.png)
+
