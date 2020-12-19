@@ -4,6 +4,9 @@ import pygame
 pygame.init()
 win = pygame.display.set_mode((500, 490))
 pygame.display.set_caption("Tileks' game")
+programIcon = pygame.image.load('game\ikon.png')
+pygame.display.set_icon(programIcon)
+
 
 
 walkRight = [pygame.image.load('game\pygame_right_1.png'),
@@ -71,7 +74,7 @@ class player(object):
         self.y = 420
         self.walkCount = 0
         font = pygame.font.SysFont('comicsans', 100)
-        text = font.render('-5', True, (255, 0, 0))
+        text = font.render('-10', True, (255, 0, 0))
         win.blit(text, (250 - (text.get_width() / 2), 200))
         pygame.display.update()
         i = 0
@@ -128,9 +131,9 @@ class enemy(object):
         self.height = height
         self.path = [x, end]
         self.walkCount = 0
-        self.vel = 3
+        self.vel = 10
         self.hitbox = (self.x + 17, self.y, 35, 60)
-        self.health = 9
+        self.health = 10
         self.visible = True
 
     def draw(self, win):
@@ -169,10 +172,10 @@ class enemy(object):
                 self.walkCount = 0
 
     def hit(self):
-        if self.health > 0:
+        '''if self.health > 0:
             self.health -= 1
         else:
-            self.visible = False
+            self.visible = False'''
         print("hit")
 
 
@@ -197,13 +200,13 @@ run = True
 while run:
     clock.tick(27)
 
-    if goblin.visible == True:
-        if man.hitbox[1] < goblin.hitbox[1] + goblin.hitbox[3] and \
-                man.hitbox[1] + man.hitbox[3] > goblin.hitbox[1]:
-            if man.hitbox[0] + man.hitbox[2] > goblin.hitbox[0] and \
-                    man.hitbox[0] < goblin.hitbox[0] + goblin.hitbox[2]:
-                man.hit()
-                score -= 5
+    #if goblin.visible == True:
+    if man.hitbox[1] < goblin.hitbox[1] + goblin.hitbox[3] and \
+            man.hitbox[1] + man.hitbox[3] > goblin.hitbox[1]:
+        if man.hitbox[0] + man.hitbox[2] > goblin.hitbox[0] and \
+                man.hitbox[0] < goblin.hitbox[0] + goblin.hitbox[2]:
+            man.hit()
+            score -= 10
 
     if shootLoop > 0:
         shootLoop += 1
