@@ -4,25 +4,25 @@ import pygame
 pygame.init()
 win = pygame.display.set_mode((500, 490))
 pygame.display.set_caption("Tileks' game")
-programIcon = pygame.image.load('game\ikon.png')
+programIcon = pygame.image.load('ikon.png')
 pygame.display.set_icon(programIcon)
 
 
 
-walkRight = [pygame.image.load('game\pygame_right_1.png'),
-             pygame.image.load('game\pygame_right_2.png'),
-             pygame.image.load('game\pygame_right_3.png'),
-             pygame.image.load('game\pygame_right_4.png'),
-             pygame.image.load('game\pygame_right_5.png'),
-             pygame.image.load('game\pygame_right_6.png')]
-walkLeft = [pygame.image.load('game\pygame_left_1.png'),
-            pygame.image.load('game\pygame_left_2.png'),
-            pygame.image.load('game\pygame_left_3.png'),
-            pygame.image.load('game\pygame_left_4.png'),
-            pygame.image.load('game\pygame_left_5.png'),
-            pygame.image.load('game\pygame_left_6.png')]
-playerStand = pygame.image.load('game\pygame_idle.png')
-bg = pygame.image.load('game\pygame_bg.jpg')
+walkRight = [pygame.image.load('pygame_right_1.png'),
+             pygame.image.load('pygame_right_2.png'),
+             pygame.image.load('pygame_right_3.png'),
+             pygame.image.load('pygame_right_4.png'),
+             pygame.image.load('pygame_right_5.png'),
+             pygame.image.load('pygame_right_6.png')]
+walkLeft = [pygame.image.load('pygame_left_1.png'),
+            pygame.image.load('pygame_left_2.png'),
+            pygame.image.load('pygame_left_3.png'),
+            pygame.image.load('pygame_left_4.png'),
+            pygame.image.load('pygame_left_5.png'),
+            pygame.image.load('pygame_left_6.png')]
+playerStand = pygame.image.load('pygame_idle.png')
+bg = pygame.image.load('pygame_bg.jpg')
 clock = pygame.time.Clock()
 
 bulletSound = pygame.mixer.Sound('bullet.wav')
@@ -101,28 +101,28 @@ class snaryad(object):
 
 
 class enemy(object):
-    walkRight = [pygame.image.load('game\R1E.png'),
-                 pygame.image.load('game\R2E.png'),
-                 pygame.image.load('game\R3E.png'),
-                 pygame.image.load('game\R4E.png'),
-                 pygame.image.load('game\R5E.png'),
-                 pygame.image.load('game\R6E.png'),
-                 pygame.image.load('game\R7E.png'),
-                 pygame.image.load('game\R8E.png'),
-                 pygame.image.load('game\R9E.png'),
-                 pygame.image.load('game\R10E.png'),
-                 pygame.image.load('game\R11E.png')]
-    walkLeft = [pygame.image.load('game\L1E.png'),
-                pygame.image.load('game\L2E.png'),
-                pygame.image.load('game\L3E.png'),
-                pygame.image.load('game\L4E.png'),
-                pygame.image.load('game\L5E.png'),
-                pygame.image.load('game\L6E.png'),
-                pygame.image.load('game\L7E.png'),
-                pygame.image.load('game\L8E.png'),
-                pygame.image.load('game\L9E.png'),
-                pygame.image.load('game\L10E.png'),
-                pygame.image.load('game\L11E.png')]
+    walkRight = [pygame.image.load('R1E.png'),
+                 pygame.image.load('R2E.png'),
+                 pygame.image.load('R3E.png'),
+                 pygame.image.load('R4E.png'),
+                 pygame.image.load('R5E.png'),
+                 pygame.image.load('R6E.png'),
+                 pygame.image.load('R7E.png'),
+                 pygame.image.load('R8E.png'),
+                 pygame.image.load('R9E.png'),
+                 pygame.image.load('R10E.png'),
+                 pygame.image.load('R11E.png')]
+    walkLeft = [pygame.image.load('L1E.png'),
+                pygame.image.load('L2E.png'),
+                pygame.image.load('L3E.png'),
+                pygame.image.load('L4E.png'),
+                pygame.image.load('L5E.png'),
+                pygame.image.load('L6E.png'),
+                pygame.image.load('L7E.png'),
+                pygame.image.load('L8E.png'),
+                pygame.image.load('L9E.png'),
+                pygame.image.load('L10E.png'),
+                pygame.image.load('L11E.png')]
 
     def __init__(self, x, y, width, height, end):
         self.x = x
